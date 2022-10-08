@@ -1,2 +1,2 @@
 # fantasy
-##详情见公众号 xuyuntong
+## 详情见公众号 xuyuntong
