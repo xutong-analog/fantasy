@@ -52,5 +52,11 @@ typedef struct{
 void CSD203_Init(CSD_CONFIG *CSD203_CFG);
 /* Read Vbus Voltage*/
 uint16_t CSD203_ReadVbus(CSD_CONFIG *CSD203_CFG);
+/*Read Rshunt*/
+uint16_t CSD203_ReadRshunt(CSD_CONFIG *CSD203_CFG);
+/*Read Power*/
+uint16_t CSD203_ReadPower(CSD_CONFIG *CSD203_CFG);
+/*Read Current*/
+uint16_t CSD203_ReadCurrent(CSD_CONFIG *CSD203_CFG)
 
 #endif 
