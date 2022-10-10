@@ -20,3 +20,28 @@ uint16_t CSD203_ReadVbus(CSD_CONFIG *CSD203_CFG)
 	Data=IIC_DUT_R(ADDR,BUS_VOLTAGE);
 	return Data;
 }
+/*Read Rshunt*/
+uint16_t CSD203_ReadRshunt(CSD_CONFIG *CSD203_CFG)
+{
+	uint16_t Data=0,ADDR=0;
+	ADDR=(CSD203_CFG->DeviceADDR);
+	Data=IIC_DUT_R(ADDR,SHUNT_VOLTAGE);
+	return Data;
+}
+/*Read Power*/
+uint16_t CSD203_ReadPower(CSD_CONFIG *CSD203_CFG)
+{
+	uint16_t Data=0,ADDR=0;
+	ADDR=(CSD203_CFG->DeviceADDR);
+	Data=IIC_DUT_R(ADDR,POWER);
+	return Data;
+}
+/*Read Current*/
+uint16_t CSD203_ReadCurrent(CSD_CONFIG *CSD203_CFG)
+{
+	uint16_t Data=0,ADDR=0;
+	ADDR=(CSD203_CFG->DeviceADDR);
+	Data=IIC_DUT_R(ADDR,CURRENT);
+	return Data;
+}
+
