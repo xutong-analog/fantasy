@@ -5,8 +5,6 @@
 #include "stdio.h"
 #include "IIC.h"
 
-
-
 /* CSD203 Regsistor map */
 #define CONFIGURATION   0X00
 /*Read Only*/
@@ -58,8 +56,58 @@
 
 #define CSD_CONFIG_ShuntBus_CON 7
 
-#define CSD_CONFIG_ADDR_A1_GND_A2_GND 64
+#define CSD_CONFIG_ADDR_A1_GND_A0_GND 64
+#define CSD_CONFIG_ADDR_A1_GND_VS_GND 65
+#define CSD_CONFIG_ADDR_A1_GND_SDA_GND 66
+#define CSD_CONFIG_ADDR_A1_GND_SCL_GND 67
+#define CSD_CONFIG_ADDR_A1_VS_A0_GND 68
+#define CSD_CONFIG_ADDR_A1_VS_A0_VS 69
+#define CSD_CONFIG_ADDR_A1_VS_A0_SDA 70
+#define CSD_CONFIG_ADDR_A1_VS_A0_SCL 71
+#define CSD_CONFIG_ADDR_A1_SDA_A0_GND 72
+#define CSD_CONFIG_ADDR_A1_SDA_A0_VS 73
+#define CSD_CONFIG_ADDR_A1_SDA_A0_SDA 74
+#define CSD_CONFIG_ADDR_A1_SDA_A0_SCL 75
+#define CSD_CONFIG_ADDR_A1_SCL_A0_GND 76
+#define CSD_CONFIG_ADDR_A1_SCL_A0_VS 77
+#define CSD_CONFIG_ADDR_A1_SCL_A0_SDA 78
+#define CSD_CONFIG_ADDR_A1_SCL_A0_SCL 79
+/******************/
+/*CSD Alert Option*/
+/******************/
+/*Vshunt Voltage Over Voltage*/
+#define CSD_ALERT_VShunt_OVA_ON 	1
+#define CSD_ALERT_VShunt_OVA_OFF 	0
+/*Vshunt Voltage Under Voltage*/
+#define CSD_ALERT_VShunt_UVA_ON 	1
+#define CSD_ALERT_VShunt_UVA_OFF 	0
+/*VBus Voltage Over Voltage*/
+#define CSD_ALERT_VBUS_OVA_ON 	1
+#define CSD_ALERT_VBUS_OVA_OFF 	0
+/*VBus Voltage Under Voltage*/
+#define CSD_ALERT_VBUS_UVA_ON 	1
+#define CSD_ALERT_VBUS_UVA_OFF 	0
+/* Power Over Limit */
+#define CSD_ALERT_Power_Over_ON 	1
+#define CSD_ALERT_Power_Over_OFF 	0
+/* ADC Coversion Ready */
+#define CSD_ALERT_CoversionReady_ON 	1
+#define CSD_ALERT_CoversionReady_OFF 	0
+#define CSD_ALERT_CNVR_FLAG_ON 	1
+#define CSD_ALERT_CNVR_FLAG_OFF 	0
+/*  ALERT Function Flag and Alert latch Work Together */
+#define CSD_ALERT_ALERT_FLAG_ON 	1
+#define CSD_ALERT_ALERT_FLAG_OFF 	0
+#define CSD_ALERT_ALERT_Latch_ON 	1
+#define CSD_ALERT_ALERT_Latch_OFF 	0
+/*Power over flow */
+#define CSD_ALERT_OVF_ON 	1
+#define CSD_ALERT_OVF_OFF 	0
+/*Alert Pin */
+#define CSD_ALERT_APOL_ActiveLow 	1
+#define CSD_ALERT_APOL_ActiveHigh 0
 
+/*CSD Basic Configuration struct*/
 typedef struct{
 	uint8_t DeviceADDR;
 	uint8_t RST;
@@ -70,7 +118,27 @@ typedef struct{
 	uint16_t CurrentLSB;
 	uint16_t Rshunt;
 }CSD_CONFIG;
+/*CSD Basic Configuration struct*/
+
+/*CSD ALERT Configuration struct*/
+typedef struct{
+	uint8_t VShunt_OVA;
+	uint8_t VShuntUVA;
+	uint8_t VBUS_OVA;
+	uint8_t VBUS_UVA;
+	uint8_t Power_OVER_Limit;
+	uint8_t CNVR;
+	uint8_t ALERT_FLAG;
+	uint8_t CNVR_FLAG;
+	uint8_t OVF;
+	uint8_t APOL;
+	uint8_t ALERT_Latch;
+}CSD_ALERT;
+/*CSD ALERT Configuration struct*/
+
+
 /*Initial CSD203 Config*/
+void CSD203_Alert(CSD_ALERT *CSD_ALT);
 void CSD203_Init(CSD_CONFIG *CSD203_CFG);
 /* Read Vbus Voltage*/
 uint16_t CSD203_ReadVbus(CSD_CONFIG *CSD203_CFG);
@@ -82,3 +150,4 @@ uint16_t CSD203_ReadPower(CSD_CONFIG *CSD203_CFG);
 uint16_t CSD203_ReadCurrent(CSD_CONFIG *CSD203_CFG);
 
 #endif 
+
