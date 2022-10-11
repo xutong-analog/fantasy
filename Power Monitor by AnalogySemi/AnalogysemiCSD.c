@@ -10,7 +10,10 @@ void CSD203_Init(CSD_CONFIG *CSD203_CFG)
 	Data|=CSD203_CFG->Mode;
 	ADDR=(CSD203_CFG->DeviceADDR);
 	IIC_DUT_W(ADDR,CONFIGURATION,Data);
-	printf("%x\r\n",Data);
+	printf("Config Register :%x\r\n",Data);
+	Data=CalParam/((CSD203_CFG->CurrentLSB)*(CSD203_CFG->Rshunt));
+	IIC_DUT_W(ADDR,CALIBRATION,Data);
+	printf("CALIBRATION Register :%x\r\n",Data);
 }
 /*Read Vbus*/
 uint16_t CSD203_ReadVbus(CSD_CONFIG *CSD203_CFG)
@@ -36,7 +39,7 @@ uint16_t CSD203_ReadPower(CSD_CONFIG *CSD203_CFG)
 	Data=IIC_DUT_R(ADDR,POWER);
 	return Data;
 }
-/*Read Current*/
+
 uint16_t CSD203_ReadCurrent(CSD_CONFIG *CSD203_CFG)
 {
 	uint16_t Data=0,ADDR=0;
