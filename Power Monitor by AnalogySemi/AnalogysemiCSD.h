@@ -16,10 +16,7 @@
 #define CALIBRATION     0x05
 #define MASKENABLE      0x06
 #define ALERTLIMIT      0x07
-/*
-#define MANUFACTURER 0x00
-#define DIE_ID 0x00
-*/
+
 
 /* CSD203 Regsistor Config*/
 #define CSD_CONFIG_RST 		 1
