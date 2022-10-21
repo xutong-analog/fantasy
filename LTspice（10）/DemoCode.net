@@ -1,0 +1,15 @@
+*电源 一头连接到负端，一头连接到0 电压是2V
+*参考文档：spice a guide to circuit simulation and analysis using pspice
+Vin R1_N 0 2
+*一头连接 R1N 一头连接 A 电阻是1ohm
+R1 R1_N A  {x}
+*一头连接A 一头连接GND 电阻是1ohm
+R2 A 0 {x}
+*一头连接 A一头连接GND 电流是1A
+I1 A 0 -1
+*瞬态仿真1mS
+.tran 1m
+*使用{x}来表示R的阻值
+.param x 1
+*表示写完
+.end
