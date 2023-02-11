@@ -17,12 +17,12 @@ static void LPSPI_GPIO_Init(void)
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_02_LPSPI3_SDI,        /* GPIO_AD_B0_02 is configured as LPSPI3_SDI */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_03_LPSPI3_PCS0,       /* GPIO_AD_B0_03 is configured as LPSPI3_PCS0 */
       0U);
 }
-void LPSPI_Init(void)
+void LPSPI_Init(void) 
 {
     //config Lpspi clock
     CLOCK_SetMux(kCLOCK_LpspiMux, 3);
@@ -47,3 +47,15 @@ void Lpspi_Write(uint8_t datasize,uint8_t *data)
     spi_tranxfer.dataSize=datasize; //数据长度
     LPSPI_MasterTransferBlocking(LPSPI3, &spi_tranxfer);
 }
+void Lpspi_Read(uint8_t datasize,uint8_t *data,uint8_t *Rxdata)
+{       
+    lpspi_transfer_t spi_tranxfer;
+    spi_tranxfer.configFlags=kLPSPI_MasterPcs0|kLPSPI_MasterPcsContinuous | kLPSPI_MasterByteSwap;
+    spi_tranxfer.txData=data; //要发送的数据
+    spi_tranxfer.rxData=Rxdata; //要接收的数据
+    spi_tranxfer.dataSize=datasize; //数据长度
+    LPSPI_MasterTransferBlocking(LPSPI3, &spi_tranxfer);
+ 
+}
+
+
