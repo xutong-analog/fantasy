@@ -9,7 +9,9 @@
 
 
 void LPSPI_Init(void);
-void DAC_Write(uint8_t channel,uint16_t Value);
+//xue
+void Lpspi_Write(uint8_t datasize,uint8_t *data);
+void Lpspi_Read(uint8_t datasize,uint8_t *data,uint8_t *Rxdata);
 
 #endif /* __BSP_LPSPI_H */
 
