@@ -6,6 +6,19 @@
 #include "board.h"
 #include "bsp_lpspi.h"
 #include "rtthread.h"
+//初始化ADX3208
+void ADX3208_Init(void)
+{
+//    START_L;
+//    XTAL_H;
+//    PWDN_H;
+//    RST_H;
+//    rt_thread_mdelay(150);
+//    RST_L;
+//    rt_thread_mdelay(1);
+//    RST_H;
+    
+}
 //获取芯片的ID号
 uint8_t ADX3208_GetChipID(void)
 {
