@@ -107,6 +107,9 @@
 #define ADX3208_ADC_Resolution_16 16
 #define ADX3208_ADC_Resolution_24 24
 
+
+
+
 //写命令
 void ADX3208_Command(uint8_t Com);
 //获取芯片的ID号
@@ -123,4 +126,6 @@ void ADX3208_WriteMultiReg(uint8_t StartReg,uint8_t RegNum,uint8_t *Data);
 void ADX3208_GetAllReg(void);
 //获取ADC的值
 void ADX3208_GetADC_Value(uint8_t ADC_Resolution,uint8_t *Rxdata);
+//初始化ADX3208
+void ADX3208_Init(void);
 #endif
