@@ -1,4 +1,4 @@
-#include <_types/_uint16_t.h>
+//#include <_types/_uint16_t.h>
 #ifndef CSD203_h
 #define CSD203_h
 #include "Arduino.h"
@@ -140,13 +140,17 @@ typedef struct{
 class CSD203 {
 
     public:
-		void begin();				//初始化
-    uint16_t GetVoltage(); // 获取电压值
-    uint16_t GetCurrent(); // 获取电流值
-    uint16_t GetPower(); //获取功率值 
+		void begin(CSD_CONFIG *CSD203_CFG);				//初始化
+   uint16_t CSD203_ReadVbus(CSD_CONFIG *CSD203_CFG);// 获取电压值
+    uint16_t CSD203_ReadPower(CSD_CONFIG *CSD203_CFG); // 获取电流值
+    uint16_t CSD203_ReadRshunt(CSD_CONFIG *CSD203_CFG); //获取功率值 
+        uint16_t CSD203_ReadCurrent(CSD_CONFIG *CSD203_CFG); //获取功率值 
 
 	  private:
-
+    //把Wire作为私有变量
+    void IIC_DUT_W(u_int8_t DUT_ADDR,u_int8_t REG,u_int16_t Data); //
+    uint16_t IIC_DUT_R(u_int8_t DUT_ADDR,u_int8_t REG);//
 	
 };
 #endif
+
