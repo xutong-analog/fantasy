@@ -1,8 +1,8 @@
-#include <_types/_uint16_t.h>
+//#include <_types/_uint16_t.h>
 #include "CSD203.h"
 #include "Arduino.h"
 #include "Wire.h"
-void CSD203::begin()
+void CSD203::begin(CSD_CONFIG *CSD203_CFG)
 {
   uint16_t Data=0,ADDR=0;
 	Data|=(CSD203_CFG->RST)<<15;
@@ -11,35 +11,66 @@ void CSD203::begin()
 	Data|=(CSD203_CFG->VShunt_Conv_Time)<<2;
 	Data|=CSD203_CFG->Mode;
 	ADDR=(CSD203_CFG->DeviceADDR);
-  //使用Arduino 自带的IIC库
-  //设定器件地址
-  Wire.beginTransmission(ADDR);
+	IIC_DUT_W(ADDR,CONFIGURATION,Data);
+	Data=CalParam/((CSD203_CFG->CurrentLSB)*(CSD203_CFG->Rshunt));
+	IIC_DUT_W(ADDR,CALIBRATION,Data);
+}
+void CSD203::IIC_DUT_W(u_int8_t DUT_ADDR,u_int8_t REG,u_int16_t Data)
+{
+  Wire.beginTransmission(DUT_ADDR);
   //写寄存器地址
 	Wire.write(CONFIGURATION);
   Wire.write(Data);
   Wire.endTransmission();
-	//printf("Config Register :%x\r\n",Data);
-	Data=CalParam/((CSD203_CFG->CurrentLSB)*(CSD203_CFG->Rshunt));
-  Wire.write(Data);
 }
-uint16_t CSD203::GetCurrent()
+uint16_t CSD203::IIC_DUT_R(u_int8_t DUT_ADDR,u_int8_t REG)
 {
-  uint16_t Current;
+  uint16_t Data;
+  Wire.beginTransmission(DUT_ADDR);
+  //写寄存器地址
+	Wire.write(REG);
+  //结束传输
+  Wire.endTransmission();
 
-  return Current;
+  Wire.beginTransmission(DUT_ADDR);
+  //从这个地址获取两个Byte的数据
+  Wire.requestFrom(DUT_ADDR,2);
+  if(Wire.available())
+  {
+    Data=Wire.read();
+  }
+  Wire.endTransmission();
+  return Data;
 }
-uint16_t CSD203::GetPower()
+/*Read Vbus*/
+uint16_t CSD203::CSD203_ReadVbus(CSD_CONFIG *CSD203_CFG)
 {
-  uint16_t Power;
-  
-  return Power;
+	uint16_t Data=0,ADDR=0;
+	ADDR=(CSD203_CFG->DeviceADDR);
+	Data=IIC_DUT_R(ADDR,BUS_VOLTAGE);
+	return Data;
 }
-uint16_t CSD203::GetVoltage()
+/*Read Rshunt*/
+uint16_t CSD203::CSD203_ReadRshunt(CSD_CONFIG *CSD203_CFG)
 {
-  uint16_t Voltage;
-  return Voltage;
+	uint16_t Data=0,ADDR=0;
+	ADDR=(CSD203_CFG->DeviceADDR);
+	Data=IIC_DUT_R(ADDR,SHUNT_VOLTAGE);
+	return Data;
 }
-void IIC_DUT_W(u_int8_t DUT_ADDR,u_int8_t REG,u_int16_t Data)
+/*Read Power*/
+uint16_t CSD203::CSD203_ReadPower(CSD_CONFIG *CSD203_CFG)
 {
-    
+	uint16_t Data=0,ADDR=0;
+	ADDR=(CSD203_CFG->DeviceADDR);
+	Data=IIC_DUT_R(ADDR,POWER);
+	return Data;
+}
+
+uint16_t CSD203::CSD203_ReadCurrent(CSD_CONFIG *CSD203_CFG)
+{
+	uint16_t Data=0,ADDR=0;
+	ADDR=(CSD203_CFG->DeviceADDR);
+	Data=IIC_DUT_R(ADDR,CURRENT);
+	return Data;
 }
