@@ -1,9 +1,15 @@
 //#include <_types/_uint16_t.h>
 #ifndef CSD203_h
 #define CSD203_h
-#include "Arduino.h"
+  #include <Arduino.h>
 #include <stdint.h>
-#include "Wire.h"
+#ifdef USE_TINY_WIRE_M_
+ #include <TinyWireM.h>
+#endif
+#ifndef USE_TINY_WIRE_M_
+ #include <Wire.h>
+#endif
+//#include "TwoWire.h"
 /* CSD203 Regsistor map */
 #define CONFIGURATION   0X00
 /*Read Only*/
@@ -55,8 +61,8 @@
 
 #define CSD_CONFIG_ShuntBus_CON 7
 
-#define CSD_CONFIG_ADDR_A1_GND_A0_GND 64
-#define CSD_CONFIG_ADDR_A1_GND_VS_GND 65
+#define CSD_CONFIG_ADDR_A1_GND_A0_GND 0x40
+#define CSD_CONFIG_ADDR_A1_GND_VS_GND 0x41
 #define CSD_CONFIG_ADDR_A1_GND_SDA_GND 66
 #define CSD_CONFIG_ADDR_A1_GND_SCL_GND 67
 #define CSD_CONFIG_ADDR_A1_VS_A0_GND 68
@@ -149,8 +155,7 @@ class CSD203 {
 	  private:
     //把Wire作为私有变量
     void IIC_DUT_W(u_int8_t DUT_ADDR,u_int8_t REG,u_int16_t Data); //
-    uint16_t IIC_DUT_R(u_int8_t DUT_ADDR,u_int8_t REG);//
+    uint16_t IIC_DUT_R(uint8_t DUT_ADDR,uint8_t REG);//
 	
 };
 #endif
-
