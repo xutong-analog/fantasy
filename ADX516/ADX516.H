@@ -30,11 +30,14 @@
 */
 
 /*command define*/
+#define ADX516_REF 2.5
+#define ADX516_PGA 1
+#define ADX516_LSB (2*ADX516_REF)/(ADX516_PGA*8388607)
 
 #define ADX516_WAKEUP 0x00
-#define ADX516_RDATA   0x12
-#define ADX516_RDATAC  0x10
-#define ADX516_SDATAC  0x11
+#define ADX516_RDATA   0x01
+#define ADX516_RDATAC  0x03
+#define ADX516_SDATAC  0x0F
 #define ADX516_RREG    0x10
 #define ADX516_WREG    0X50
 #define ADX516_SELFCAL 0XF0
@@ -45,7 +48,6 @@
 #define ADX516_SYNC     0XFC
 #define ADX516_STANDBY 0xFD
 #define ADX516_RESET   0xFE
-
 
 
 //RREG Read n nnnn registers starting at address r rrrr 
